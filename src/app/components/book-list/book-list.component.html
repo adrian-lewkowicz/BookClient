@@ -1,0 +1,32 @@
+<div>
+    <button (click)="openCreateDialog()" color="primary">Dodaj książkę</button>
+    <button mat-raised-button color="accent" (click)="downloadBooks()">Pobierz Listę Książek</button>
+</div>
+<div *ngIf="isLoading">Ładowanie...</div>
+
+<table *ngIf="!isLoading" class="table">
+    <thead>
+        <tr>
+            <th>Tytuł</th>
+            <th>Autor</th>
+            <th>Data publikacji</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let book of books">
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.publicationDate | date }}</td>
+            <td>
+                <button (click)="deleteBook(book.id)">Usuń</button>
+                <button (click)="openEditDialog(book)">Edytuj</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div>
+    <button (click)="previousPage()" [disabled]="page === 1">Poprzednia</button>
+    <button (click)="nextPage()">Następna</button>
+</div>

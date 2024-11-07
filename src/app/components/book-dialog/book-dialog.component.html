@@ -1,0 +1,85 @@
+<h1 mat-dialog-title>{{ isEditMode ? 'Edytuj Książkę' : 'Dodaj Książkę' }}</h1>
+<div mat-dialog-content>
+    <form (ngSubmit)="onSave()" [formGroup]="bookForm">
+
+        <mat-form-field>
+            <mat-label>Tytuł</mat-label>
+            <input matInput formControlName="title" required>
+            <mat-error *ngIf="bookForm.controls['title'].hasError('required')">
+                Tytuł jest wymagany
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Autor</mat-label>
+            <input matInput formControlName="author" required>
+            <mat-error *ngIf="bookForm.controls['author'].hasError('required')">
+                Autor jest wymagany
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Data publikacji</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="publicationDate" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="bookForm.controls['publicationDate'].hasError('required')">
+                Data publikacji jest wymagana
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Liczba stron</mat-label>
+            <input matInput type="number" formControlName="pages" required min="1">
+            <mat-error *ngIf="bookForm.controls['pages'].hasError('required')">
+                Liczba stron jest wymagana
+            </mat-error>
+            <mat-error *ngIf="bookForm.controls['pages'].hasError('min')">
+                Liczba stron musi być większa niż 0
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Gatunek</mat-label>
+            <input matInput formControlName="genre" required>
+            <mat-error *ngIf="bookForm.controls['genre'].hasError('required')">
+                Gatunek jest wymagany
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Ocena</mat-label>
+            <input matInput type="number" formControlName="rating" required min="0" max="5">
+            <mat-error *ngIf="bookForm.controls['rating'].hasError('required')">
+                Ocena jest wymagana
+            </mat-error>
+            <mat-error
+                *ngIf="bookForm.controls['rating'].hasError('min') || bookForm.controls['rating'].hasError('max')">
+                Ocena musi być liczbą od 0 do 5
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Cena</mat-label>
+            <input matInput type="number" formControlName="price" required min="0">
+            <mat-error *ngIf="bookForm.controls['price'].hasError('required')">
+                Cena jest wymagana
+            </mat-error>
+            <mat-error *ngIf="bookForm.controls['price'].hasError('min')">
+                Cena musi być większa lub równa 0
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>ISBN</mat-label>
+            <input matInput formControlName="isbn" required>
+            <mat-error *ngIf="bookForm.controls['isbn'].hasError('required')">
+                ISBN jest wymagany
+            </mat-error>
+        </mat-form-field>
+
+        <mat-checkbox formControlName="isAvailable">Is Available</mat-checkbox>
+        <button mat-button (click)="dialogRef.close()">Anuluj</button>
+        <button mat-button color="primary" type="submit" [disabled]="bookForm.invalid">Zapisz</button>
+    </form>
+</div>
